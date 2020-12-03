@@ -47,6 +47,7 @@ render(siteTripEventsHiddenElement, createSortTemplate(), `afterend`);
 const siteTripSortElement = siteTripEventsElement.querySelector(`.trip-sort`);
 render(siteTripSortElement, createListTemplate(), `afterend`);
 
+
 // добавляем в список элементы списка 3 разa
 
 const siteTripEventsListElement = siteTripEventsElement.querySelector(`.trip-events__list`);
@@ -54,16 +55,32 @@ for (let i = 0; i < TASK_COUNT; i++) {
   render(siteTripEventsListElement, createItemTemplate(), `beforeend`);
 }
 
-// добавляем в 1 элемент списка форму редактирования точки маршрута
 
-const siteTripEventsItemOneElement = siteTripEventsListElement.querySelector(`.trip-events__item:first-child`);
-render(siteTripEventsItemOneElement, createEditFormTemplate(), `beforeend`);
+// по клику на кнопу "New event" добавляем форму создания новой точки маршрута
+
+const btnAddNewEvent = siteTripElement.querySelector(`.trip-main__event-add-btn`);
+
+const btnAddNewEventClickHandler = function() {
+  render(siteTripEventsListElement, createAddNewPointTemplate(), `afterbegin`);
+  btnAddNewEvent.setAttribute("disabled", "disabled");
+};
+
+btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
 
 
-// добавляем 2 элементу списка форму создания точки маршрута
+// по клику на кнопу внутри точки маршрута, добавляем форму редактирования точки маршрута
 
-const siteTripEventsItemTwoElement = siteTripEventsListElement.querySelector(`.trip-events__item:nth-child(2)`);
-render(siteTripEventsItemTwoElement, createAddNewPointTemplate(), `beforeend`);
+const siteTripEventsListItemElement = siteTripEventsListElement.querySelectorAll(`.trip-events__item`);
 
+for (let j = 0; j < siteTripEventsListItemElement.length; j++) {
+  const btnEditEvent = siteTripEventsListItemElement[j].querySelector(`.event__rollup-btn`);
+
+  const btnEditEventClickHandler = function() {
+    render(siteTripEventsListItemElement[j], createEditFormTemplate(), `beforeend`);
+    btnEditEvent.removeEventListener("click", btnEditEventClickHandler);
+  }
+
+  btnEditEvent.addEventListener(`click`, btnEditEventClickHandler);
+}
 
 
