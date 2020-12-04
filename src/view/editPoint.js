@@ -1,4 +1,4 @@
-export const createEditFormTemplate = () => {
+export const createEditPointTemplate = () => {
   return `<form class="event event--edit" action="#" method="post">
                 <header class="event__header">
                   <div class="event__type-wrapper">

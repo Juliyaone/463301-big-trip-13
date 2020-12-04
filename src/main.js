@@ -4,14 +4,17 @@ import {createControlsTemplate} from "./view/controls.js";
 import {createFilterTemplate} from "./view/filter.js";
 import {createSortTemplate} from "./view/sort.js";
 import {createListTemplate} from "./view/list.js";
-import {createItemTemplate} from "./view/item.js";
 import {createPointTemplate} from "./view/pointEvent.js"; // точка маршрута
 import {createAddNewPointTemplate} from "./view/addNewPoint.js"; // новая точка маршрута
-import {createEditFormTemplate} from "./view/editForm.js"; // редактируемая точка маршрута
+import {createEditPointTemplate} from "./view/editPoint.js"; // редактируемая точка маршрута\
+import {generatePoint} from "./mock/point.js"; // подключаем моки
 
 
 
-const TASK_COUNT = 3;
+
+const TASK_COUNT = 15;
+
+const points = new Array(TASK_COUNT).fill().map(generatePoint);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -48,11 +51,11 @@ const siteTripSortElement = siteTripEventsElement.querySelector(`.trip-sort`);
 render(siteTripSortElement, createListTemplate(), `afterend`);
 
 
-// добавляем в список элементы списка 3 разa
+// добавляем в список элементы списка 15 раз
 
 const siteTripEventsListElement = siteTripEventsElement.querySelector(`.trip-events__list`);
 for (let i = 0; i < TASK_COUNT; i++) {
-  render(siteTripEventsListElement, createItemTemplate(), `beforeend`);
+  render(siteTripEventsListElement, createPointTemplate(points[i]), `beforeend`);
 }
 
 
@@ -68,7 +71,7 @@ const btnAddNewEventClickHandler = function() {
 btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
 
 
-// по клику на кнопу внутри точки маршрута, добавляем форму редактирования точки маршрута
+// по клику на кнопу "Стрелка вниз" внутри точки маршрута, добавляем форму редактирования точки маршрута
 
 const siteTripEventsListItemElement = siteTripEventsListElement.querySelectorAll(`.trip-events__item`);
 
@@ -76,7 +79,7 @@ for (let j = 0; j < siteTripEventsListItemElement.length; j++) {
   const btnEditEvent = siteTripEventsListItemElement[j].querySelector(`.event__rollup-btn`);
 
   const btnEditEventClickHandler = function() {
-    render(siteTripEventsListItemElement[j], createEditFormTemplate(), `beforeend`);
+    render(siteTripEventsListItemElement[j], createEditPointTemplate(), `beforeend`);
     btnEditEvent.removeEventListener("click", btnEditEventClickHandler);
   }
 
