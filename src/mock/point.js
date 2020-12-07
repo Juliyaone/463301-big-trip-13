@@ -42,82 +42,154 @@ const generateDestination = () => {
 }
 
 
-//генерация mock offer
-const generateOffer = () => {
-  const offers = [
-    [`Order Uber`, `20 €`],
-    [`Add luggage`, `50 €`],
-    [`Switch to comfort`, `80 €`],
-    [`Rent a car`, `200 €`],
-    [`Add breakfast`, `50 €`],
-    [`Book tickets`, `40 €`],
-    [`Lunch in city`, `30 €`]
-  ];
-
-  const randomIndex = getRandomInteger(0, offers.length - 1);
-  return offers[randomIndex].join();
-}
-
-
 //генерация mock descriptions
-const generateDescriptions = () => {
-  const descriptions = [
-    `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
-    `Cras aliquet varius magna, non porta ligula feugiat eget.`,
-    `Fusce tristique felis at fermentum pharetra.`,
-    `Aliquam id orci ut lectus varius viverra.`,
-    `Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.`,
-    `Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.`,
-    `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
-    `Sed sed nisi sed augue convallis suscipit in sed felis.`,
-    `Aliquam erat volutpat.`,
-    `Nunc fermentum tortor ac porta dapibus.`,
-    `In rutrum ac purus sit amet tempus.`
-  ];
+const descriptions = [
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
+  `Cras aliquet varius magna, non porta ligula feugiat eget.`,
+  `Fusce tristique felis at fermentum pharetra.`,
+  `Aliquam id orci ut lectus varius viverra.`,
+  `Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.`,
+  `Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum.`,
+  `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
+  `Sed sed nisi sed augue convallis suscipit in sed felis.`,
+  `Aliquam erat volutpat.`,
+  `Nunc fermentum tortor ac porta dapibus.`,
+  `In rutrum ac purus sit amet tempus.`
+];
 
-  const randomIndex = getRandomInteger(0, descriptions.length - 1);
-  return descriptions[randomIndex];
+const generateDescriptions = (items) => {
+  const newArrayDescriptions = descriptions.slice();
+  const descriptionItems = [];
+  for (let i = 0; i < newArrayDescriptions.length; i++) {
+
+    if (descriptionItems.length <= 5) {
+      const random = Math.floor(Math.random() * newArrayDescriptions.length);
+      descriptionItems.push(newArrayDescriptions[random]);
+    }
+  }
+
+  const mySet = new Set(descriptionItems);
+  const аrrayDescription = Array.from(mySet);
+
+  const description = аrrayDescription.join(` `);
+  return description;
 };
 
-// генерация mock dateStart ДОРАБОТАТЬ
+// генерация mock dateStart
 const generateDateStart = () => {
-  const date = dayjs();
-  const startDate = date.toDate();
-  return startDate;
+  const dateTimeFormat = `2020-12-21T16:00`;
+  const maxDaysGap = 7;
+  const dateStart = dayjs(dateTimeFormat).add(getRandomInteger(-maxDaysGap, maxDaysGap), `day`).toDate();
+  return dateStart;
 };
 
-// генерация mock dateEnd ДОРАБОТАТЬ
+// генерация mock dateEnd
 const generateDateEnd = () => {
-  const date = dayjs();
-  const daysGap = 1;
-  const startDate = dayjs();
-  const dateEnd = startDate.add(daysGap, `day`).toDate();
+  const dateTimeFormat = `2020-12-21T17:00`;
+  const maxDaysGap = 7;
+  const dateEnd = dayjs(dateTimeFormat).add(getRandomInteger(1, maxDaysGap), `day`).toDate();
   return dateEnd;
 };
 
+
+// генерация массива предложений
+const offers = [
+    {
+      text: `Order Uber`,
+      price: `20`
+    },
+    {
+      text: `Add luggage`,
+      price: `50`
+    },
+    {
+      text: `Switch to comfort`,
+      price: `80`
+    },
+    {
+      text:  `Rent a car`,
+      price: `200`
+    },
+    {
+      text: `Add breakfast`,
+      price: `40`
+    },
+    {
+      text: `Book tickets`,
+      price: `30`
+    },
+    {
+      text: `Lunch in city`,
+      price: `50`
+    }
+];
+
+const generateOffers = () => {
+  const newArray = offers.slice();
+
+  const newArrayOffers = [];
+
+  for (let i = 0; i <= newArray.length; i++) {
+    if (newArrayOffers.length <= newArray.length) {
+      const random = Math.floor(Math.random() * newArray.length);
+      newArrayOffers.push(newArray[random]);
+    }
+  }
+
+  const mySet = new Set(newArrayOffers);
+  const аrrayOffers = Array.from(mySet);
+
+  const randomLength = getRandomInteger(0, 5);
+  return аrrayOffers.slice(0,  randomLength);
+};
+
+
+//генерация цены
+const generatePrices = () => {
+  const PRICE_COUNT = 1000;
+  const GAP_PRICE = 10;
+  let price = getRandomInteger(0, PRICE_COUNT);
+  return Math.round(price / GAP_PRICE) * GAP_PRICE;
+}
+
+
+
+
+//генерация mock photo
+const generatePhoto = () => {
+  const randomIndex = getRandomInteger(1, 5);
+  let photo = [];
+  for (let i = 0; i < randomIndex; i++) {
+    photo.push(`http://picsum.photos/248/152?r=${Math.random()}`);
+  }
+  return photo;
+};
 
 
 
 //генерация объекта на основе mock
 export const generatePoint = () => {
-  const dateTimeStart = generateDateStart();
-  const dateTimeEnd = generateDateEnd();
+  const dateStart = generateDateStart();
+  const dateEnd = generateDateEnd();
   const type = generateType();
   const destination = generateDestination();
-  const offer =  generateOffer();
+  const offer =  generateOffers();
+  const price = generatePrices();
   const description = generateDescriptions();
+  const photo = generatePhoto();
 
   return {
     type,
     destination,
-    offer,
     description,
-    dateTimeStart,
-    dateTimeEnd,
+    offer,
+    price,
+    dateStart,
+    dateEnd,
+    photo,
     favorite: Boolean(getRandomInteger(0, 1))
   };
 
-  // dateTimeEnd: ;
   // photo: Math.random();
-  // price: 20€;
+
 };
