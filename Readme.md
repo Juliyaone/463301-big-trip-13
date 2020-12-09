@@ -1,7 +1,7 @@
 # Проект «Большое путешествие» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юлия Семенуха](https://up.htmlacademy.ru/ecmascript/13/user/463301).
-* Наставник: `Kate Savasteeva`.
+* Наставник: `RAMAN LAURYNIUK`.
 
 ---
 
