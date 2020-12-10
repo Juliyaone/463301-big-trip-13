@@ -27,7 +27,7 @@ export const createEditPointTemplate = (point) => {
   const createListType = () => {
     let typeList = ``;
     const types = TYPES;
-    for (let i = 0; i < type.length; i++) {
+    for (let i = 0; i < types.length; i++) {
       typeList += `<div class="event__type-item">
                       <input id="event-type-${types[i].toLowerCase()}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${types[i]}">
                       <label class="event__type-label  event__type-label--${types[i].toLowerCase()}" for="event-type-${types[i].toLowerCase()}">${types[i]}</label>
