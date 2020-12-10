@@ -64,7 +64,9 @@ for (let i = 0; i < TASK_COUNT; i++) {
 const btnAddNewEvent = siteTripElement.querySelector(`.trip-main__event-add-btn`);
 
 const btnAddNewEventClickHandler = function() {
-  render(siteTripEventsListElement, createAddNewPointTemplate(), `afterbegin`);
+  for (let i = 0; i < 1; i++) {
+    render(siteTripEventsListElement, createAddNewPointTemplate(points[i]), `afterbegin`);
+  }
   btnAddNewEvent.setAttribute("disabled", "disabled");
 };
 
@@ -79,11 +81,9 @@ for (let j = 0; j < siteTripEventsListItemElement.length; j++) {
   const btnEditEvent = siteTripEventsListItemElement[j].querySelector(`.event__rollup-btn`);
 
   const btnEditEventClickHandler = function() {
-    render(siteTripEventsListItemElement[j], createEditPointTemplate(), `beforeend`);
+    render(siteTripEventsListItemElement[j], createEditPointTemplate(points[j]), `beforeend`);
     btnEditEvent.removeEventListener("click", btnEditEventClickHandler);
   }
 
   btnEditEvent.addEventListener(`click`, btnEditEventClickHandler);
 }
-
-
