@@ -1,23 +1,22 @@
-import dayjs from "dayjs";
-import {getRandomInteger, transformationDate, createDestinationList} from "../util.js";
-import {TYPES, DESTINATIONS, OFFERS} from "../const.js"
+import {transformationDate, createDestinationList} from "../util.js";
+import {TYPES, OFFERS} from "../const.js";
 
 export const createEditPointTemplate = (point) => {
-  const {type, destination, description, offer, price, dateTime, photo, favorite} = point;
-  const {date ,dateTimeStart, dateTimeEnd} = transformationDate();
+  const {type, destination, description, price} = point;
+  const {dateTimeStart, dateTimeEnd} = transformationDate();
 
   // Создает список дополнительных опций
   const createOffersListEvent = () => {
     let offerDefault = OFFERS;
     let offersList = [];
     for (let i = 0; i < offerDefault.length; i++) {
-      const {text, price} = offerDefault[i];
+      const {text, cost} = offerDefault[i];
       offersList += `<div class="event__offer-selector">
                         <input class="event__offer-checkbox  visually-hidden" id="event-offer-${[i]}" type="checkbox" name="${text}">
                         <label class="event__offer-label" for="event-offer-${[i]}">
                           <span class="event__offer-title">${text}</span>
                             &plus;&euro;&nbsp;
-                          <span class="event__offer-price">${price}</span>
+                          <span class="event__offer-price">${cost}</span>
                         </label>
                       </div>`;
     }
@@ -27,11 +26,11 @@ export const createEditPointTemplate = (point) => {
   // Создает список типов
   const createListType = () => {
     let typeList = ``;
-    const type = TYPES;
+    const types = TYPES;
     for (let i = 0; i < type.length; i++) {
-       typeList += `<div class="event__type-item">
-                      <input id="event-type-${type[i].toLowerCase()}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type[i]}">
-                      <label class="event__type-label  event__type-label--${type[i].toLowerCase()}" for="event-type-${type[i].toLowerCase()}">${type[i]}</label>
+      typeList += `<div class="event__type-item">
+                      <input id="event-type-${types[i].toLowerCase()}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${types[i]}">
+                      <label class="event__type-label  event__type-label--${types[i].toLowerCase()}" for="event-type-${types[i].toLowerCase()}">${types[i]}</label>
                     </div>`;
     }
     return typeList;

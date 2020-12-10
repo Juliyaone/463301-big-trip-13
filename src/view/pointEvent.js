@@ -1,26 +1,23 @@
-import dayjs from "dayjs";
 import {getDatesDuration, transformationDate} from "../util.js";
 
 
 export const createPointTemplate = (point) => {
-  const {type, destination, offer, price, description, dateTime, favorite} = point;
+  const {type, destination, offer, price, dateTime, favorite} = point;
   const {start, end} = dateTime;
 
   const {date, dateTimeStart, dateTimeEnd} = transformationDate();
-
-
 
   // Создает список дополнительных опций
   const createOffersList = () => {
     let offersList = ``;
 
     for (let i = 0; i < offer.length; i++) {
-      const {text, price} = offer[i];
+      const {text, cost} = offer[i];
 
       offersList += `<li class="event__offer">
                         <span class="event__offer-title">${text}</span>
                         &plus;&euro;&nbsp;
-                        <span class="event__offer-price">${price}</span>
+                        <span class="event__offer-price">${cost}</span>
                      </li>`;
     }
     return offersList;

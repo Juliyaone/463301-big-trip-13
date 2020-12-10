@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {DESTINATIONS} from "./const.js"
+import {DESTINATIONS} from "./const.js";
 
 
 const getRandomInteger = (a = 0, b = 1) => {
@@ -40,22 +40,20 @@ const getDatesDuration = (start, end) => {
 // Трансформирует дату
 const transformationDate = (start, end) => {
   return {
-        date: dayjs(start).format(`MMM D`),
-        dateTimeStart: dayjs(start).format(`D/M/YY HH:mm`),
-        dateTimeEnd: dayjs(end).format(`D/M/YY HH:mm`)
-    };
-}
-
- // Создает список точек маршрута
-  const createDestinationList = () => {
-    let destinationList = ``;
-    for (let i = 0; i < DESTINATIONS.length; i++) {
-       destinationList += `<option value="${DESTINATIONS[i]}"></option>`;
-    }
-    return destinationList;
+    date: dayjs(start).format(`MMM D`),
+    dateTimeStart: dayjs(start).format(`D/M/YY HH:mm`),
+    dateTimeEnd: dayjs(end).format(`D/M/YY HH:mm`)
   };
+};
 
-
+// Создает список точек маршрута
+const createDestinationList = () => {
+  let destinationList = ``;
+  for (let i = 0; i < DESTINATIONS.length; i++) {
+    destinationList += `<option value="${DESTINATIONS[i]}"></option>`;
+  }
+  return destinationList;
+};
 
 export {
   getRandomInteger,

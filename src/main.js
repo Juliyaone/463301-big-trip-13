@@ -9,9 +9,6 @@ import {createAddNewPointTemplate} from "./view/addNewPoint.js"; // новая �
 import {createEditPointTemplate} from "./view/editPoint.js"; // редактируемая точка маршрута\
 import {generatePoint} from "./mock/point.js"; // подключаем моки
 
-
-
-
 const TASK_COUNT = 15;
 
 const points = new Array(TASK_COUNT).fill().map(generatePoint);
@@ -63,11 +60,11 @@ for (let i = 0; i < TASK_COUNT; i++) {
 
 const btnAddNewEvent = siteTripElement.querySelector(`.trip-main__event-add-btn`);
 
-const btnAddNewEventClickHandler = function() {
+const btnAddNewEventClickHandler = function () {
   for (let i = 0; i < 1; i++) {
     render(siteTripEventsListElement, createAddNewPointTemplate(points[i]), `afterbegin`);
   }
-  btnAddNewEvent.setAttribute("disabled", "disabled");
+  btnAddNewEvent.setAttribute(`disabled`, `disabled`);
 };
 
 btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
@@ -80,10 +77,10 @@ const siteTripEventsListItemElement = siteTripEventsListElement.querySelectorAll
 for (let j = 0; j < siteTripEventsListItemElement.length; j++) {
   const btnEditEvent = siteTripEventsListItemElement[j].querySelector(`.event__rollup-btn`);
 
-  const btnEditEventClickHandler = function() {
+  const btnEditEventClickHandler = function () {
     render(siteTripEventsListItemElement[j], createEditPointTemplate(points[j]), `beforeend`);
-    btnEditEvent.removeEventListener("click", btnEditEventClickHandler);
-  }
+    btnEditEvent.removeEventListener(`click`, btnEditEventClickHandler);
+  };
 
   btnEditEvent.addEventListener(`click`, btnEditEventClickHandler);
 }

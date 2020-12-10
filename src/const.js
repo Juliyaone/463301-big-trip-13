@@ -32,34 +32,34 @@ const DESCRIPTIONS = [
 ];
 
 const OFFERS = [
-    {
-      text: `Order Uber`,
-      price: `20`
-    },
-    {
-      text: `Add luggage`,
-      price: `50`
-    },
-    {
-      text: `Switch to comfort`,
-      price: `80`
-    },
-    {
-      text:  `Rent a car`,
-      price: `200`
-    },
-    {
-      text: `Add breakfast`,
-      price: `40`
-    },
-    {
-      text: `Book tickets`,
-      price: `30`
-    },
-    {
-      text: `Lunch in city`,
-      price: `50`
-    }
+  {
+    text: `Order Uber`,
+    cost: `20`
+  },
+  {
+    text: `Add luggage`,
+    cost: `50`
+  },
+  {
+    text: `Switch to comfort`,
+    cost: `80`
+  },
+  {
+    text: `Rent a car`,
+    cost: `200`
+  },
+  {
+    text: `Add breakfast`,
+    cost: `40`
+  },
+  {
+    text: `Book tickets`,
+    cost: `30`
+  },
+  {
+    text: `Lunch in city`,
+    cost: `50`
+  }
 ];
 
 export {
