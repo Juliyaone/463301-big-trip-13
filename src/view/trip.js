@@ -5,5 +5,8 @@ export const createTripTemplate = () => {
 
               <p class="trip-info__dates">Mar 18&nbsp;&mdash;&nbsp;20</p>
             </div>
+            <p class="trip-info__cost">
+            Total: &euro;&nbsp;<span class="trip-info__cost-value">1230</span>
+            </p>
           </section>`;
 };

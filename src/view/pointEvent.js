@@ -4,7 +4,6 @@ import {getDatesDuration, transformationDate} from "../util.js";
 export const createPointTemplate = (point) => {
   const {type, destination, offer, price, dateTime, favorite} = point;
   const {start, end} = dateTime;
-
   const {date, dateTimeStart, dateTimeEnd} = transformationDate();
 
   // Создает список дополнительных опций

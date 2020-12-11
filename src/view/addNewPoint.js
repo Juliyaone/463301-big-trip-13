@@ -20,7 +20,7 @@ export const createAddNewPointTemplate = (point) => {
 
   // Создает список дополнительных опций
   const createOffersListEvent = () => {
-    let offerDefault = OFFERS;
+    const offerDefault = OFFERS;
     let offersList = [];
     for (let i = 0; i < offerDefault.length; i++) {
       const {text, cost} = offerDefault[i];
