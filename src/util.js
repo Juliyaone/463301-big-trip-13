@@ -16,7 +16,7 @@ const render = (container, element, place) => {
       container.append(element);
       break;
     case RenderPosition.AFTEREND:
-      container.append(element);
+      container.after(element);
       break;
   }
 };
@@ -36,7 +36,6 @@ const createElement = (template) => {
 
   return newElement.firstChild; // 3
 };
-
 
 
 // Генерации случайного числа из диапазона
