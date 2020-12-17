@@ -1,4 +1,4 @@
-import {renderElement, RenderPosition} from "./util.js";
+import {renderElement, RenderPosition, onEscKeyDown} from "./util.js";
 import TripView from "./view/trip.js";
 import ControlsView from "./view/controls.js";
 import FilterView from "./view/filter.js";
@@ -18,38 +18,49 @@ const points = new Array(POINT_COUNT).fill().map(generatePoint);
 
 
 // добавляем блок "Маршрут и стоимость"
-const siteHeaderElement = document.querySelector(`.page-header`);
-const siteTripElement = siteHeaderElement.querySelector(`.trip-main`);
-renderElement(siteTripElement, new TripView().getElement(), RenderPosition.AFTERBEGIN);
+const headerElement = document.querySelector(`.page-header`);
+const tripElement = headerElement.querySelector(`.trip-main`);
+renderElement(tripElement, new TripView().getElement(), RenderPosition.AFTERBEGIN);
 
 // добавляем блок "Меню"
-const siteTripControlsH2Element = siteTripElement.querySelector(`.trip-controls h2:first-child`);
-renderElement(siteTripControlsH2Element, new ControlsView().getElement(), RenderPosition.AFTEREND);
+const tripControlsH2Element = tripElement.querySelector(`.trip-controls h2:first-child`);
+renderElement(tripControlsH2Element, new ControlsView().getElement(), RenderPosition.AFTEREND);
 
 // добавляем блок "Фильтры"
-const siteTripControlsElement = siteTripElement.querySelector(`.trip-controls`);
-renderElement(siteTripControlsElement, new FilterView().getElement(), RenderPosition.BEFOREEND);
+const tripControlsElement = tripElement.querySelector(`.trip-controls`);
+renderElement(tripControlsElement, new FilterView().getElement(), RenderPosition.BEFOREEND);
 
 // добавляем блок "Сортировка"
-const siteMainElement = document.querySelector(`.page-main`);
-const siteTripEventsElement = siteMainElement.querySelector(`.trip-events`);
-renderElement(siteTripEventsElement, new SortView().getElement(), RenderPosition.BEFOREEND);
+const mainElement = document.querySelector(`.page-main`);
+const containerEventsElement = mainElement.querySelector(`.trip-events`);
+renderElement(containerEventsElement, new SortView().getElement(), RenderPosition.BEFOREEND);
 
 // добавляем блок "Контент" - список точек маршрута
-renderElement(siteTripEventsElement, new ListView().getElement(), RenderPosition.BEFOREEND);
+renderElement(containerEventsElement, new ListView().getElement(), RenderPosition.BEFOREEND);
 
-const eventsListElement = siteTripEventsElement.querySelector(`.trip-events__list`);
+const eventsListElement = containerEventsElement.querySelector(`.trip-events__list`);
 
 // при клике на кнопу "New event" добавляем форму создания новой точки маршрута
-const btnAddNewEvent = siteTripElement.querySelector(`.trip-main__event-add-btn`);
+const btnAddNewEvent = tripElement.querySelector(`.trip-main__event-add-btn`);
 
 const btnAddNewEventClickHandler = function () {
-  renderElement(eventsListElement, new AddNewPointView(points[0]).getElement(), RenderPosition.AFTERBEGIN);
+  const newTravelPoint = new AddNewPointView(points[0]);
+  renderElement(eventsListElement, newTravelPoint.getElement(), RenderPosition.AFTERBEGIN);
   btnAddNewEvent.setAttribute(`disabled`, `disabled`);
 };
 
-btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
+const removeAddNewPoint = () => {
+  const eventEdit = eventsListElement.querySelector(`.event--edit`);
+  eventEdit.remove();
+  btnAddNewEvent.removeAttribute(`disabled`);
+};
 
+const newPointEscPressHandler = function (evt) {
+  onEscKeyDown(evt, removeAddNewPoint);
+};
+
+btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
+document.addEventListener(`keydown`, newPointEscPressHandler);
 
 // при клике на кнопку "Стрелка вниз" добавляем форму редакт., при клике на кнопку "Стрелка вверх" добавляем карточку точки маршрута
 const renderPoint = (eventsList, point) => {
@@ -64,12 +75,18 @@ const renderPoint = (eventsList, point) => {
     eventsList.replaceChild(pointComponent.getElement(), editPointComponent.getElement());
   };
 
+  const editPointEscPressHandler = function (evt) {
+    onEscKeyDown(evt, replaceFormToCard);
+  };
+
   pointComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
     replaceCardToForm();
+    document.addEventListener(`keydown`, editPointEscPressHandler);
   });
 
   editPointComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
     replaceFormToCard();
+    document.removeEventListener(`keydown`, editPointEscPressHandler);
   });
 
   renderElement(eventsList, pointComponent.getElement(), RenderPosition.BEFOREEND);
