@@ -7,7 +7,7 @@ const RenderPosition = {
   AFTEREND: `afterend`
 };
 
-const render = (container, element, place) => {
+const renderElement = (container, element, place) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN:
       container.prepend(element);
@@ -99,6 +99,6 @@ export {
   createDestinationList,
   renderTemplate,
   createElement,
-  render,
+  renderElement,
   RenderPosition
 };
