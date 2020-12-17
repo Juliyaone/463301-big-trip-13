@@ -1,4 +1,4 @@
-import {createElement, renderElement, RenderPosition} from "./util.js";
+import {renderElement, RenderPosition} from "./util.js";
 import TripView from "./view/trip.js";
 import ControlsView from "./view/controls.js";
 import FilterView from "./view/filter.js";
@@ -38,7 +38,7 @@ renderElement(siteTripEventsElement, new SortView().getElement(), RenderPosition
 // добавляем блок "Контент" - список точек маршрута
 renderElement(siteTripEventsElement, new ListView().getElement(), RenderPosition.BEFOREEND);
 
-const eventsListElement = siteTripEventsElement.querySelector(`.trip-events__list`);  // ul
+const eventsListElement = siteTripEventsElement.querySelector(`.trip-events__list`);
 
 // при клике на кнопу "New event" добавляем форму создания новой точки маршрута
 const btnAddNewEvent = siteTripElement.querySelector(`.trip-main__event-add-btn`);
@@ -51,19 +51,17 @@ const btnAddNewEventClickHandler = function () {
 btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
 
 
-
 // при клике на кнопку "Стрелка вниз" добавляем форму редакт., при клике на кнопку "Стрелка вверх" добавляем карточку точки маршрута
-const renderPoint = (eventsListElement, point) => {
-
+const renderPoint = (eventsList, point) => {
   const pointComponent = new PointView(point);
   const editPointComponent = new EditPointView(point);
 
   const replaceCardToForm = () => {
-    eventsListElement.replaceChild(editPointComponent.getElement(), pointComponent.getElement());
+    eventsList.replaceChild(editPointComponent.getElement(), pointComponent.getElement());
   };
 
   const replaceFormToCard = () => {
-    eventsListElement.replaceChild(pointComponent.getElement(), editPointComponent.getElement());
+    eventsList.replaceChild(pointComponent.getElement(), editPointComponent.getElement());
   };
 
   pointComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
@@ -74,7 +72,7 @@ const renderPoint = (eventsListElement, point) => {
     replaceFormToCard();
   });
 
-  renderElement(eventsListElement, pointComponent.getElement(), RenderPosition.BEFOREEND);
+  renderElement(eventsList, pointComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
 // добавляем в список элементы списка 15 раз
@@ -82,4 +80,4 @@ const pointsArrayCopy = points.slice(0, POINT_COUNT);
 
 for (let i = 0; i <= pointsArrayCopy.length; i++) {
   renderPoint(eventsListElement, pointsArrayCopy[i]);
-};
+}
