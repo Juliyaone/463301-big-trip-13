@@ -62,6 +62,7 @@ const newPointEscPressHandler = function (evt) {
 btnAddNewEvent.addEventListener(`click`, btnAddNewEventClickHandler);
 document.addEventListener(`keydown`, newPointEscPressHandler);
 
+
 // при клике на кнопку "Стрелка вниз" добавляем форму редакт., при клике на кнопку "Стрелка вверх" добавляем карточку точки маршрута
 const renderPoint = (eventsList, point) => {
   const pointComponent = new PointView(point);
