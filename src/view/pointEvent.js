@@ -1,7 +1,6 @@
-import {getDatesDuration, transformationDate} from "../util.js";
+import {getDatesDuration, transformationDate, createElement} from "../util.js";
 
-
-export const createPointTemplate = (point) => {
+const createPointTemplate = (point) => {
   const {type, destination, offer, price, dateTime, favorite} = point;
   const {start, end} = dateTime;
   const {date, dateTimeStart, dateTimeEnd} = transformationDate();
@@ -62,3 +61,28 @@ export const createPointTemplate = (point) => {
               </div>
           </li>`;
 };
+
+export default class Point {
+  constructor(point) {
+
+    this._point = point;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

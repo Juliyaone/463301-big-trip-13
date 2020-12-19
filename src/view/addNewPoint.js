@@ -1,8 +1,9 @@
-import {createDestinationList} from "../util.js";
+
+import {createDestinationList, createElement} from "../util.js";
 import {TYPES, OFFERS} from "../const.js";
 
 
-export const createAddNewPointTemplate = (point) => {
+const createAddNewPointTemplate = (point) => {
   const {destination, description, photo} = point;
 
   // Создает список типов
@@ -117,3 +118,29 @@ export const createAddNewPointTemplate = (point) => {
                 </section>
               </form>`;
 };
+
+export default class AddNewPoint {
+  constructor(point) {
+
+    this._point = point;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createAddNewPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+
