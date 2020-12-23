@@ -1,4 +1,6 @@
 import {renderElement, RenderPosition, onEscKeyDown} from "./util.js";
+import {generatePoint} from "./mock/point.js"; // подключаем моки
+
 import TripView from "./view/trip.js";
 import ControlsView from "./view/controls.js";
 import FilterView from "./view/filter.js";
@@ -10,11 +12,10 @@ import PointView from "./view/pointEvent.js"; // точка маршрута
 import AddNewPointView from "./view/addNewPoint.js"; // новая точка маршрута
 import EditPointView from "./view/editPoint.js"; // редактируемая точка маршрута
 
-import {generatePoint} from "./mock/point.js"; // подключаем моки
-
 const POINT_COUNT = 15;
 
 const points = new Array(POINT_COUNT).fill().map(generatePoint);
+console.log(points);
 
 
 // добавляем блок "Маршрут и стоимость"
