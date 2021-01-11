@@ -1,5 +1,4 @@
 import AbstractView from "./abstract.js";
-import {createElement} from "../utils/render.js";
 import {createDestinationList} from "../utils/task.js";
 
 

@@ -1,8 +1,5 @@
 import dayjs from "dayjs";
 import {DESTINATIONS} from "../const.js";
-import {getRandomInteger} from "../utils/common.js";
-
-
 
 // Находит разницу во времени
 const getDatesDuration = (start, end) => {
@@ -17,7 +14,6 @@ const getDatesDuration = (start, end) => {
     if (val < 10) {
       stringVal = `0${val}`;
     }
-
     return stringVal;
   };
 
