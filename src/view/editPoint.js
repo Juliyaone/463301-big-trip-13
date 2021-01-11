@@ -1,4 +1,6 @@
-import {transformationDate, createDestinationList, createElement} from "../util.js";
+import AbstractView from "./abstract.js";
+import {transformationDate, createDestinationList} from "../utils/task.js";
+
 import {TYPES, OFFERS} from "../const.js";
 
 const createEditPointTemplate = (point) => {
@@ -103,27 +105,36 @@ const createEditPointTemplate = (point) => {
               </form>`;
 };
 
-export default class EditPoint {
+export default class EditPoint extends AbstractView {
   constructor(point) {
-
+    super();
     this._point = point;
-
-    this._element = null;
+    this._editClickHandler = this._editClickHandler.bind(this);
+    this._saveClickHandler = this._saveClickHandler.bind(this);
   }
 
   getTemplate() {
     return createEditPointTemplate(this._point);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandler);
   }
+
+  _saveClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.saveClick();
+  }
+
+  setSaveClickHandler(callback) {
+    this._callback.saveClick = callback;
+    this.getElement().querySelector(`.event__save-btn`).addEventListener(`click`, this._saveClickHandler);
+  }
+
 }

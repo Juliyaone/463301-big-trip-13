@@ -1,4 +1,5 @@
-import {createElement} from "../util.js";
+import AbstractView from "./abstract.js";
+
 
 
 const createControlsTemplate = () => {
@@ -8,24 +9,8 @@ const createControlsTemplate = () => {
             </nav>`;
 };
 
-export default class Controls {
-  constructor() {
-    this._element = null;
-  }
-
+export default class Controls extends AbstractView {
   getTemplate() {
     return createControlsTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
