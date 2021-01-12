@@ -1,4 +1,5 @@
-import {getDatesDuration, transformationDate, createElement} from "../util.js";
+import AbstractView from "./abstract.js";
+import {getDatesDuration, transformationDate} from "../utils/task.js";
 
 const createPointTemplate = (point) => {
   const {type, destination, offer, price, dateTime, favorite} = point;
@@ -62,27 +63,36 @@ const createPointTemplate = (point) => {
           </li>`;
 };
 
-export default class Point {
+export default class Point extends AbstractView {
   constructor(point) {
-
+    super();
     this._point = point;
-
-    this._element = null;
+    this._pointClickHandler = this._pointClickHandler.bind(this);
+    this._saveClickHandler = this._saveClickHandler.bind(this);
   }
 
   getTemplate() {
     return createPointTemplate(this._point);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
 
-    return this._element;
+  _pointClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.pointClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setPointClickHandler(callback) {
+    this._callback.pointClick = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._pointClickHandler);
+  }
+
+  _saveClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.saveClick();
+  }
+
+  setSaveClickHandler(callback) {
+    this._callback.saveClick = callback;
+    this.getElement().querySelector(`.event__save-btn`).addEventListener(`click`, this._saveClickHandler);
   }
 }

@@ -1,5 +1,7 @@
+import AbstractView from "./abstract.js";
+import {createDestinationList} from "../utils/task.js";
 
-import {createDestinationList, createElement} from "../util.js";
+
 import {TYPES, OFFERS} from "../const.js";
 
 
@@ -119,28 +121,24 @@ const createAddNewPointTemplate = (point) => {
               </form>`;
 };
 
-export default class AddNewPoint {
+export default class AddNewPoint extends AbstractView {
   constructor(point) {
-
+    super();
     this._point = point;
-
-    this._element = null;
+    this._newPointClickHandler = this._newPointClickHandler.bind(this);
   }
 
   getTemplate() {
     return createAddNewPointTemplate(this._point);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _newPointClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.newPointClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setNewPointClickHandler(callback) {
+    this._callback.newPointClick = callback;
+    this.getElement().querySelector(`.event__save-btn`).addEventListener(`click`, this._newPointClickHandler);
   }
 }
-
